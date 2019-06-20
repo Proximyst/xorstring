@@ -8,4 +8,4 @@ repository = "https://github.com/Proximyst/xorstring"
 license = "BSD-3-Clause"
 
 [dependencies]
-xorstring-procmacro = { git = "https://github.com/Proximyst/xorstring-procmacro" }
+xorstring-procmacro = "~0.1"
