@@ -6,6 +6,7 @@ edition = "2018"
 
 repository = "https://github.com/Proximyst/xorstring"
 license = "BSD-3-Clause"
+description = "Compile-time string XOR encryption."
 
 [dependencies]
 xorstring-procmacro = "~0.1"
