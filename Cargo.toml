@@ -1,0 +1,8 @@
+[package]
+name = "xorstring"
+version = "0.1.0"
+authors = ["Mariell Hoversholm <proximyst@proximyst.com>"]
+edition = "2018"
+
+[dependencies]
+xorstring-procmacro = { git = "https://github.com/Proximyst/xorstring-procmacro" }
