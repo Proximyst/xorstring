@@ -4,5 +4,8 @@ version = "0.1.0"
 authors = ["Mariell Hoversholm <proximyst@proximyst.com>"]
 edition = "2018"
 
+repository = "https://github.com/Proximyst/xorstring"
+license = "BSD-3-Clause"
+
 [dependencies]
 xorstring-procmacro = { git = "https://github.com/Proximyst/xorstring-procmacro" }
