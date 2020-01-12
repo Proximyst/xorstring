@@ -1,12 +1,19 @@
 [package]
-name = "xorstring"
+name = "xorstring-procmacro"
 version = "0.1.0"
 authors = ["Mariell Hoversholm <proximyst@proximyst.com>"]
 edition = "2018"
 
 repository = "https://github.com/Proximyst/xorstring"
 license = "BSD-3-Clause"
-description = "Compile-time string XOR encryption."
+description = "Backend of xorstring crate"
+publish = false
 
 [dependencies]
-xorstring-procmacro = { path = "./xorstring-procmacro" }
+lazy_static = "~1"
+proc-macro2 = "~0.4"
+syn = "~0.15"
+quote = "~0.6"
+
+[lib]
+proc-macro = true

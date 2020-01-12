@@ -4,6 +4,8 @@
 
 #![feature(proc_macro_hygiene)]
 
+use std::num::Wrapping;
+
 /// The XOR string proc-macro used under the hood.
 ///
 /// This is available in the case that a raw byte array of the encrypted string
@@ -31,25 +33,26 @@ impl<'a> XorString<'a> {
     ///
     /// This is done at runtime such that this crate has any use.
     pub fn decrypt(&self) -> String {
-        let mut string = String::with_capacity(self.encrypted.len());
         let key = xorstring_procmacro::xorstring!();
+        let mut decrypted = Vec::with_capacity(self.encrypted.len());
 
         for (i, c) in self.encrypted.iter().enumerate() {
-            string.push((c ^ (key as usize + i) as u8) as char);
+            decrypted.push(c ^ (Wrapping(key as usize) + Wrapping(i)).0 as u8);
         }
 
-        string
+        String::from_utf8(decrypted)
+            .expect("XORSTRING error on decrypting String! File an issue at https://github.com/Proximyst/xorstring")
     }
 }
 
 /// Create and encrypt a string at compile-time and prepare it for decryption
 /// on runtime.
 ///
-/// This must be called with a byte-string, such as `b"Hello, World!"`.
+/// This must be called with a proper string, such as `"Hello, World!"`.
 #[macro_export]
 macro_rules! xorstring {
     ($str:literal) => {
-        $crate::XorString::new($crate::xorstring_procmacro::xorstring!($str)).decrypt()
+        $crate::XorString::new($crate::xorstring_procmacro::xorstring!($str).0).decrypt()
     };
 }
 
@@ -57,25 +60,24 @@ macro_rules! xorstring {
 mod tests {
     #[test]
     fn test_simple() {
-        let xorred = super::xorstring_procmacro::xorstring!(b"abc");
-        assert_ne!(xorred, b"abc");
+        let xorred = super::xorstring_procmacro::xorstring!("abc").0;
+        assert_ne!(xorred, "abc".as_bytes());
 
         let decrypted = super::XorString::new(xorred);
         let decrypted: String = decrypted.decrypt();
-        let decrypted = decrypted.as_bytes();
 
-        assert_eq!(decrypted, b"abc");
+        assert_eq!(decrypted, "abc");
     }
 
     #[test]
     fn test_macro() {
         assert_eq!(
-            super::xorstring!(b"Hello, World!"),
+            super::xorstring!("Hello, World!"),
             String::from("Hello, World!"),
         );
         assert_ne!(
-            super::xorstring_procmacro::xorstring!(b"Hello, World!"),
-            super::xorstring!(b"Hello, World!").as_bytes(),
+            super::xorstring_procmacro::xorstring!("Hello, World!").0,
+            super::xorstring!("Hello, World!").as_bytes(),
         );
     }
 }

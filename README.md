@@ -16,9 +16,8 @@ Because of [`proc_macro_hygiene`](https://github.com/rust-lang/rust/issues/54727
 
 ## Where is the under-the-hood implementation?
 
-Here: <https://github.com/Proximyst/xorstring-procmacro>
+Here: [xorstring-procmacro](./xorstring-procmacro)
 
 ## Licence
 
-The project is licensed under the
-[BSD 3-Clause Licence](./LICENCE).
+The project is licensed under the [BSD 3-Clause Licence](./LICENCE).
