@@ -79,5 +79,9 @@ mod tests {
             super::xorstring_procmacro::xorstring!("Hello, World!").0,
             super::xorstring!("Hello, World!").as_bytes(),
         );
+        assert_eq!(
+            super::xorstring!("👀🥺"),
+            String::from("👀🥺"),
+        );
     }
 }
